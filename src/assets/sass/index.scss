@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@531&display=swap');
+
+#root {
+  font-family: 'Epilogue', sans-serif;
+
+  main {
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .poke-card {
+    padding: 20px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+  }
+
+  .poke-board {
+    margin: 20px auto;
+    padding: 10px;
+    box-sizing: border-box;
+    max-width: 1440px;
+    width: 90vw;
+    background: #fafafa;
+
+    .poke-image {
+      max-width: 100%;
+    }
+
+    .poke-info {
+      padding: 16px;
+
+      ul {
+        margin: 0;
+
+        li {
+          margin: 5px auto;
+        }
+      }
+
+      .poke-stats {
+        display: flex;
+      }
+    }
+  }
+
+  .spinner-wrapper{
+    position: absolute;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+  }
+}

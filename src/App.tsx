@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { NavigationOptions } from 'router5'
+import { actions } from 'redux-router5'
+import { connect, ConnectedProps } from 'react-redux'
+import {
+  Main,
+  Pokemon,
+  Ability
+} from './pages'
 
-function App() {
+const mapStateToProps = (state: any) => ({
+  route: state.router.route
+})
+const mapDispatchToProps = (dispatch: any) => ({
+  navigateTo: (
+    name: string,
+    params?: { [key: string]: any },
+    opts: NavigationOptions = {}
+  ) => {
+    dispatch(actions.navigateTo(name, params, opts))
+  }
+})
+const connector = connect(mapStateToProps, mapDispatchToProps)
+
+interface Route {
+  component: React.ReactNode
+  routeName: string
+}
+type PropsFromRedux = ConnectedProps<typeof connector>
+
+function App (props: PropsFromRedux) {
+  const routes: Route[] = [
+    { component: <Main />, routeName: 'root' },
+    { component: <Pokemon />, routeName: 'pokemon' },
+    { component: <Ability />, routeName: 'ability' }
+  ]
+  const renderComponent = routes.find((r: Route) => r.routeName === props.route.name)
+
+  if (!renderComponent) {
+    props.navigateTo('root')
+
+    return null
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <main>
+      <h1>Sfxdx pokemons</h1>
+      {renderComponent?.component}
+    </main>
+  )
 }
 
-export default App;
+export default connector(App)
